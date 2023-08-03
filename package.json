@@ -1,0 +1,28 @@
+{
+  "name": "challenge-ignite-nodejs-diets-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@fastify/cookie": "^9.0.1",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.21.0",
+    "knex": "^2.5.1",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@rocketseat/eslint-config": "^2.1.0",
+    "@types/node": "^20.4.5",
+    "eslint": "^8.46.0",
+    "sqlite3": "^5.1.6",
+    "tsx": "^3.12.7",
+    "typescript": "^5.1.6"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "lint": "eslint src --ext .ts --fix",
+    "knex": "node --no-warnings --loader tsx ./node_modules/.bin/knex",
+    "migrate": "",
+    "reset-migate": ""
+  }
+}
