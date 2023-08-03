@@ -13,7 +13,7 @@ declare module 'knex/types/tables' {
       created_at: string
       session_id?: string
     }
-    diets: {
+    meals: {
       id: string
       name: string
       description: string
