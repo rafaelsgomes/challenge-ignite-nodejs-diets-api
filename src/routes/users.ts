@@ -17,16 +17,12 @@ export async function usersRoutes(app: FastifyInstance) {
       request.body,
     )
 
-    let sessionId = request.cookies.sessionId
+    const sessionId = randomUUID()
 
-    if (sessionId) {
-      sessionId = randomUUID()
-
-      reply.cookie('sessionId', sessionId, {
-        path: '/',
-        maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
-      })
-    }
+    reply.cookie('sessionId', sessionId, {
+      path: '/',
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+    })
 
     await knex('users').insert({
       id: randomUUID(),
@@ -45,12 +41,21 @@ export async function usersRoutes(app: FastifyInstance) {
     {
       preHandler: [checkSessionIdExists],
     },
-    async (request) => {
+    async (request, reply) => {
       const { sessionId } = request.cookies
+
+      if (!sessionId) {
+        return reply.status(400).send({ error: 'No sessionId provided!' })
+      }
+
       const user = await knex('users')
         .where('session_id', sessionId)
         .select()
         .first()
+
+      if (!user) {
+        return reply.status(404).send({ error: 'User not found!' })
+      }
       return {
         user: {
           ...user,
